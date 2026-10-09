@@ -1,0 +1,92 @@
+// Схема базы данных NETWORTH — описание сущностей и связей
+// согласно ERD и ТЗ (раздел 4.3 "Какие данные хранятся")
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Роль пользователя: всего два значения — "user" и "admin".
+// Дефолтные записи создаются один раз миграцией/сидом, 3 тестовые записи не нужны 
+model Role {
+  role_id   Int    @id @default(autoincrement())
+  role_name String @unique
+
+  users User[]
+
+  @@map("role")
+}
+
+// Пользователь системы
+model User {
+  user_id  Int    @id @default(autoincrement())
+  nickname String
+  email    String @unique
+  password String // хранится как bcrypt-хеш, не как открытый текст
+
+  role_id Int
+  role    Role @relation(fields: [role_id], references: [role_id])
+
+  categories Category[]
+  operations Operation[]
+  limits     Limit[]
+
+  @@map("user")
+}
+
+// Категория дохода/расхода. Может быть личной (user_id указан)
+// или дефолтной общей категорией (user_id = null).
+model Category {
+  category_id Int    @id @default(autoincrement())
+  name        String
+
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [user_id])
+
+  operations Operation[]
+  limits     Limit[]
+
+  @@map("category")
+}
+
+// Вид операции: доход или расход
+enum OperationKind {
+  income
+  expense
+}
+
+// Ключевая сущность — финансовая операция
+model Operation {
+  operation_id Int           @id @default(autoincrement())
+  summ         Decimal       @db.Decimal(12, 2)
+  data         DateTime      @default(now())
+  kind         OperationKind
+  comment      String?
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
+
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [category_id])
+
+  @@map("operation")
+}
+
+// Лимит расходов по категории за период
+model Limit {
+  limit_id    Int      @id @default(autoincrement())
+  data        DateTime @default(now()) // начало периода отслеживания лимита
+  limit_summ  Decimal  @db.Decimal(12, 2)
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
+
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [category_id])
+
+  @@map("limit")
+}
