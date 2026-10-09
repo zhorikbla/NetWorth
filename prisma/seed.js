@@ -21,7 +21,9 @@ async function main() {
   });
 
   // 2. Пользователи (3 тестовые записи)
-  const passwordHash = await bcrypt.hash("password123", 10);
+  const user1PasswordHash = await bcrypt.hash("password123", 10);
+  const user2PasswordHash = await bcrypt.hash("password123", 10);
+  const adminPasswordHash = await bcrypt.hash("password123", 10);
 
   const user1 = await prisma.user.upsert({
     where: { email: "nikita@example.com" },
@@ -29,7 +31,7 @@ async function main() {
     create: {
       nickname: "nikita",
       email: "nikita@example.com",
-      password: passwordHash,
+      password: user1PasswordHash,
       role_id: roleUser.role_id,
     },
   });
@@ -40,7 +42,7 @@ async function main() {
     create: {
       nickname: "olga",
       email: "olga@example.com",
-      password: passwordHash,
+      password: user2PasswordHash,
       role_id: roleUser.role_id,
     },
   });
@@ -51,7 +53,7 @@ async function main() {
     create: {
       nickname: "admin",
       email: "admin@example.com",
-      password: passwordHash,
+      password: adminPasswordHash,
       role_id: roleAdmin.role_id,
     },
   });
@@ -108,6 +110,7 @@ async function main() {
       category_id: catTransport.category_id,
     },
   });
+
   await prisma.limit.create({
     data: {
       data: new Date("2026-10-01"),
@@ -116,12 +119,13 @@ async function main() {
       category_id: catFood.category_id,
     },
   });
+
   await prisma.limit.create({
     data: {
-      data: new Date("2026-10-01"),
-      limit_summ: 100000,
-      user_id: user2.user_id,
-      category_id: catSalary.category_id,
+      data: new Date("2026-11-01"),
+      limit_summ: 6000,
+      user_id: user1.user_id,
+      category_id: catTransport.category_id,
     },
   });
 

@@ -38,14 +38,13 @@ model User {
   @@map("user")
 }
 
-// Категория дохода/расхода. Может быть личной (user_id указан)
-// или дефолтной общей категорией (user_id = null).
+// Пользовательская категория финансовых операций.
 model Category {
   category_id Int    @id @default(autoincrement())
   name        String
 
-  user_id Int?
-  user    User? @relation(fields: [user_id], references: [user_id])
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
 
   operations Operation[]
   limits     Limit[]
@@ -78,9 +77,9 @@ model Operation {
 
 // Лимит расходов по категории за период
 model Limit {
-  limit_id    Int      @id @default(autoincrement())
-  data        DateTime @default(now()) // начало периода отслеживания лимита
-  limit_summ  Decimal  @db.Decimal(12, 2)
+  limit_id   Int      @id @default(autoincrement())
+  data       DateTime
+  limit_summ Decimal  @db.Decimal(12, 2)
 
   user_id Int
   user    User @relation(fields: [user_id], references: [user_id])
@@ -88,5 +87,6 @@ model Limit {
   category_id Int
   category    Category @relation(fields: [category_id], references: [category_id])
 
+  @@unique([user_id, category_id, data])
   @@map("limit")
 }
