@@ -6,6 +6,11 @@ const prisma = require("./db");
 
 const categoriesRouter = require("./routes/categories");
 const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const operationsRouter = require("./routes/operations");
+const limitsRouter = require("./routes/limits");
+const statsRouter = require("./routes/stats");
+const adminRouter = require("./routes/admin");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +18,11 @@ app.use(express.json());
 
 app.use("/api/categories", categoriesRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/operations", operationsRouter);
+app.use("/api/limits", limitsRouter);
+app.use("/api/stats", statsRouter);
+app.use("/api/admin", adminRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

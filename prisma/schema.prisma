@@ -44,7 +44,7 @@ model Category {
   name        String
 
   user_id Int
-  user    User @relation(fields: [user_id], references: [user_id])
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
   operations Operation[]
   limits     Limit[]
@@ -67,7 +67,7 @@ model Operation {
   comment      String?
 
   user_id Int
-  user    User @relation(fields: [user_id], references: [user_id])
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
   category_id Int
   category    Category @relation(fields: [category_id], references: [category_id])
@@ -82,7 +82,7 @@ model Limit {
   limit_summ Decimal  @db.Decimal(12, 2)
 
   user_id Int
-  user    User @relation(fields: [user_id], references: [user_id])
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
   category_id Int
   category    Category @relation(fields: [category_id], references: [category_id])

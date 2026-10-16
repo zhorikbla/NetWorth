@@ -110,7 +110,7 @@ router.post("/", authMiddleware, async (req, res)=>{
 /**
  * @openapi
  * /api/categories/{id}:
- *   put:
+ *   patch:
  *     summary: Изменить категорию
  *     tags:
  *       - Categories
@@ -128,8 +128,6 @@ router.post("/", authMiddleware, async (req, res)=>{
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - name
  *             properties:
  *               name:
  *                 type: string
@@ -147,7 +145,7 @@ router.post("/", authMiddleware, async (req, res)=>{
  *         description: Ошибка сервера
  */
 
-router.put("/:id", authMiddleware, async (req, res)=> {
+router.patch("/:id", authMiddleware, async (req, res)=> {
     try{
         const categoryId = Number(req.params.id);
         const { name } = req.body;
@@ -155,6 +153,11 @@ router.put("/:id", authMiddleware, async (req, res)=> {
         if(!Number.isInteger(categoryId) || categoryId<=0){
             return res.status(400).json({
                 error : "Некорректный ID категории",
+            });
+        }
+        if (name === undefined){
+            return res.status(400).json({
+                error: "Нечего изменять — передайте поле name",
             });
         }
         if (typeof name !=="string" || name.trim().length<2){
