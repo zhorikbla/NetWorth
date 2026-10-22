@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const prisma = require("../db");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * @openapi
@@ -46,7 +47,7 @@ router.post("/register", async (req, res) =>{
     try{
         const { email, nickname, password } = req.body;
 
-        if(!email || !nickname || !password) {
+        if(typeof email !=="string" || typeof nickname !== "string" || typeof password!=="string") {
             return res.status(400).json({
                 error: "Email, nickname и pasword обязательны"
             });
@@ -55,7 +56,7 @@ router.post("/register", async (req, res) =>{
         const normalizedEmail = email.trim().toLowerCase();
         const normalizedNickname = nickname.trim();
 
-        if(!normalizedEmail.includes("@")){
+        if(!EMAIL_PATTERN.test(normalizedEmail)){
             return res.status(400).json({
                 error: "Некорректный email",
             })
@@ -161,13 +162,17 @@ router.post("/login", async(req,res)=>{
     try{
         const {email, password} = req.body;
 
-        if (!email || !password){
+        if (typeof email !=="string" || typeof password!=="string" || password.length ===0 ){
             return res.status(400).json({
-                error: "Email и password обязательны",
+                error: "Email и password должны быть не пустыми строками",
             });
         }
         const normalizedEmail = email.trim().toLowerCase();
-
+        if(!EMAIL_PATTERN.test(normalizedEmail)){
+            return res.status(400).json({
+                error:"Некорректный email",
+            });
+        }
         const user = await prisma.user.findUnique({
             where:{
                 email: normalizedEmail,
