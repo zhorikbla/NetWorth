@@ -1,5 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import RegisterPage from './pages/RegisterPage/RegisterPage'
+import LoginPage from './pages/LoginPage/LoginPage'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 function TemporaryPage({title}){
   return(
     <main className="temporary-page">
@@ -12,13 +15,16 @@ function TemporaryPage({title}){
 function App(){
   return (
     <Routes>
-      <Route path="/login" element={<TemporaryPage title="Вход" />}/>
-      <Route path="/register" element={<TemporaryPage title="Регистрация" />}/>
-      <Route path="/dashboard" element={<TemporaryPage title="Мои финансы" />}/>
-      <Route path="/operations" element={<TemporaryPage title="Операции" />}/>
-      <Route path="/categories" element={<TemporaryPage title="Категории" />}/>
-      <Route path="/limits" element={<TemporaryPage title="Лимиты" />}/>
-      <Route path="/profile" element={<TemporaryPage title="Личный кабинет" />}/>
+      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/register" element={<RegisterPage/>}/>
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<TemporaryPage title="Мои финансы" />}/>
+        <Route path="/operations" element={<TemporaryPage title="Операции" />}/>
+        <Route path="/categories" element={<TemporaryPage title="Категории" />}/>
+        <Route path="/limits" element={<TemporaryPage title="Лимиты" />}/>
+        <Route path="/profile" element={<TemporaryPage title="Личный кабинет" />}/>
+      </Route>
       
       <Route path="/" element={<Navigate to="/login" replace />}/>
       <Route path="*" element={<TemporaryPage title="Страница не найдена" />}/>

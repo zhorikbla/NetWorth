@@ -1,0 +1,308 @@
+.register-page {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 48px 24px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(217, 164, 65, 0.06), transparent 32%),
+      var(--background);
+  }
+
+  .register-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(1180px, 100%);
+    min-height: 670px;
+    overflow: hidden;
+    background: #11141a;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .register-promo {
+    padding: 58px 42px;
+    background: linear-gradient(145deg, #171a21 0%, #12151b 100%);
+    border-right: 1px solid var(--border);
+  }
+
+  .register-logo {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: var(--gold);
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+  }
+
+  .register-promo h1 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: clamp(32px, 3vw, 42px);
+    font-weight: 750;
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+  }
+
+  .register-promo-description {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .register-features {
+    display: grid;
+    gap: 22px;
+    margin-top: 42px;
+  }
+
+  .register-feature {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 100px;
+    padding: 20px;
+    background: rgba(32, 36, 44, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.025);
+    border-radius: 14px;
+  }
+
+  .register-feature-icon {
+    display: grid;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    color: var(--gold);
+    background: var(--gold-tint);
+    border-radius: 50%;
+    font-size: 30px;
+  }
+
+  .register-feature h2 {
+    margin: 0 0 6px;
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .register-feature p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .register-form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 58px 48px;
+    background: #0f1117;
+  }
+
+  .register-form-heading {
+    margin-bottom: 30px;
+  }
+
+  .register-form-heading h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 34px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+  }
+
+  .register-form-heading p {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 17px;
+  }
+
+  .register-form {
+    display: grid;
+    gap: 20px;
+  }
+
+  .register-form label {
+    display: grid;
+    gap: 9px;
+  }
+
+  .register-form label > span {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .register-form input {
+    width: 100%;
+    height: 52px;
+    padding: 0 18px;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      background 160ms ease;
+  }
+
+  .register-form input::placeholder {
+    color: #727987;
+  }
+
+  .register-form input:hover {
+    border-color: #3a414e;
+  }
+
+  .register-form input:focus {
+    background: #232832;
+    border-color: var(--gold);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--gold-tint);
+  }
+
+  .register-error {
+    padding: 12px 14px;
+    color: var(--danger);
+    background: rgba(239, 146, 146, 0.08);
+    border: 1px solid rgba(239, 146, 146, 0.24);
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .register-submit {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 4px;
+    color: #17130b;
+    background: var(--gold);
+    border-radius: 999px;
+    font-weight: 800;
+    transition:
+      background 160ms ease,
+      transform 160ms ease;
+  }
+
+  .register-submit:hover:not(:disabled) {
+    background: var(--gold-hover);
+    transform: translateY(-1px);
+  }
+
+  .register-submit:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .register-login-link {
+    margin-top: 26px;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .register-login-link a {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .register-login-link a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .register-page {
+      padding: 24px;
+    }
+
+    .register-card {
+      grid-template-columns: 1fr;
+      max-width: 620px;
+    }
+
+    .register-promo {
+      padding: 34px;
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .register-logo {
+      margin-bottom: 18px;
+      font-size: 34px;
+    }
+
+    .register-features {
+      display: none;
+    }
+
+    .register-form-section {
+      padding: 40px 34px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .register-page {
+      display: block;
+      padding: 0;
+    }
+
+    .register-card {
+      min-height: 100vh;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .register-promo {
+      padding: 28px 22px;
+    }
+
+    .register-promo h1 {
+      font-size: 28px;
+    }
+
+    .register-promo-description {
+      font-size: 15px;
+    }
+
+    .register-form-section {
+      padding: 34px 22px;
+    }
+
+    .register-form-heading h2 {
+      font-size: 28px;
+    }
+  }
+  .register-password-field {
+    position: relative;
+  }
+
+  .register-password-field input {
+    padding-right: 92px;
+  }
+
+  .register-password-field button {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    padding: 6px;
+    color: var(--text-secondary);
+    background: transparent;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .register-password-field button:hover {
+    color: var(--gold);
+  }
+  .register-success {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: var(--success);
+    background: rgba(115, 155, 135, 0.08);
+    border: 1px solid rgba(115, 155, 135, 0.24);
+    border-radius: 10px;
+    font-size: 14px;
+  }
