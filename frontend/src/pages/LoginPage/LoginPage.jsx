@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 import AuthPromo from '../../components/AuthPromo/AuthPromo'
+import { apiRequest } from '../../api/api'
 import { saveAuth } from '../../utils/authStorage'
 import '../RegisterPage/RegisterPage.css'
 
@@ -30,21 +31,13 @@ function LoginPage() {
         setError('')
         setIsLoading(true)
         try{
-            const response = await fetch('/api/auth/login',{
+            const data = await apiRequest('/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json',
-                },
                 body: JSON.stringify({
                     email: form.email,
                     password: form.password,
                 }),
             })
-            const data = await response.json()
-
-            if(!response.ok){
-                throw new Error(data.error || "Не удалось выполнить вход")
-            }
             saveAuth(data.token, data.user)
 
             const destination = location.state?.from || '/dashboard'

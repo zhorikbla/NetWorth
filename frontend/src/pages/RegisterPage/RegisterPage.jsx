@@ -3,6 +3,7 @@ import {Link, useNavigate } from 'react-router-dom'
 
 import './RegisterPage.css'
 import AuthPromo from '../../components/AuthPromo/AuthPromo'
+import { apiRequest } from '../../api/api'
 
 function RegisterPage(){
     const navigate = useNavigate()
@@ -41,23 +42,14 @@ function RegisterPage(){
         }
         setIsLoading(true)
         try{
-            const response = await fetch('/api/auth/register', {
+            await apiRequest('/auth/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
                     nickname: form.nickname,
                     email: form.email,
                     password: form.password,
                 }),
             })
-            const data = await response.json()
-
-            if (!response.ok){
-                throw new Error(data.error || 'Не удалось зарегистрироваться')
-            }
-
             navigate('/login',{
                 state: {
                     message: 'Аккаунт создан. Теперь войдите в систему',

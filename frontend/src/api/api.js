@@ -1,5 +1,7 @@
 import { clearAuth, getToken } from '../utils/authStorage'
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '')
+
 export async function apiRequest(path, options = {}) {
   const headers = new Headers(options.headers)
   const token = getToken()
@@ -12,7 +14,7 @@ export async function apiRequest(path, options = {}) {
     headers.set('Content-Type', 'application/json')
   }
 
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers,
   })

@@ -25,6 +25,11 @@ export function getStoredUser() {
   }
 }
 
+export function updateStoredUser(user) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user))
+  window.dispatchEvent(new CustomEvent('auth-user-updated', { detail: user }))
+}
+
 export function clearAuth() {
   localStorage.removeItem(TOKEN_KEY)
   localStorage.removeItem(USER_KEY)

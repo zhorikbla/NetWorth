@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger")
 const prisma = require("./db");
@@ -11,6 +13,17 @@ const operationsRouter = require("./routes/operations");
 const limitsRouter = require("./routes/limits");
 const statsRouter = require("./routes/stats");
 const adminRouter = require("./routes/admin");
+
+const requiredEnvironmentVariables = ["DATABASE_URL", "JWT_SECRET"];
+const missingEnvironmentVariables = requiredEnvironmentVariables.filter(
+  (variableName) => !process.env[variableName]
+);
+
+if (missingEnvironmentVariables.length > 0) {
+  throw new Error(
+    `Не заданы переменные окружения: ${missingEnvironmentVariables.join(", ")}`
+  );
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -80,6 +93,26 @@ app.get("/api/db-check", async (req, res) => {
   } 
 });
 
+// После `npm run build` Vite кладёт готовый frontend в frontend/dist.
+// Express раздаёт эти файлы в production, а неизвестные frontend-маршруты
+// возвращает в index.html, чтобы React Router обработал URL самостоятельно.
+const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+
+  app.use((req, res, next) => {
+    const isFrontendRoute = req.method === "GET"
+      && req.accepts("html")
+      && !req.path.startsWith("/api");
+
+    if (isFrontendRoute) {
+      return res.sendFile(path.join(frontendDistPath, "index.html"));
+    }
+
+    next();
+  });
+}
+
 app.use((req, res)=>{
   res.status(404).json({
     error:"Маршрут не найден",
@@ -90,6 +123,3 @@ app.listen(PORT, () => {
   console.log(`NETWORTH API: http://localhost:${PORT}`);
   console.log(`SWAGGER UI: http://localhost:${PORT}/api-docs`);  
 });
-
-
-
