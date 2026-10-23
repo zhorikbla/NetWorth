@@ -1,0 +1,283 @@
+{
+  "user": {
+    "user_id": 1,
+    "nickname": "Alex",
+    "email": "alex@example.com",
+    "role": {
+      "role_name": "user"
+    }
+  },
+  "categories": [
+    {
+      "category_id": 1,
+      "name": "Продукты",
+      "user_id": 1
+    },
+    {
+      "category_id": 2,
+      "name": "Жильё",
+      "user_id": 1
+    },
+    {
+      "category_id": 3,
+      "name": "Транспорт",
+      "user_id": 1
+    },
+    {
+      "category_id": 4,
+      "name": "Кафе",
+      "user_id": 1
+    },
+    {
+      "category_id": 5,
+      "name": "Покупки",
+      "user_id": 1
+    },
+    {
+      "category_id": 6,
+      "name": "Зарплата",
+      "user_id": 1
+    }
+  ],
+  "operations": [
+    {
+      "operation_id": 23,
+      "summ": 45000,
+      "data": "2026-10-21",
+      "kind": "income",
+      "comment": "Зарплата за октябрь",
+      "category_id": 6
+    },
+    {
+      "operation_id": 8,
+      "summ": 120.5,
+      "data": "2026-10-21",
+      "kind": "expense",
+      "comment": "Поездка на метро",
+      "category_id": 3
+    },
+    {
+      "operation_id": 13,
+      "summ": 350,
+      "data": "2026-10-20",
+      "kind": "expense",
+      "comment": "Кофейня",
+      "category_id": 4
+    },
+    {
+      "operation_id": 1,
+      "summ": 2450,
+      "data": "2026-10-20",
+      "kind": "expense",
+      "comment": "Продукты на неделю",
+      "category_id": 1
+    },
+    {
+      "operation_id": 24,
+      "summ": 40000,
+      "data": "2026-10-19",
+      "kind": "income",
+      "comment": "Аванс",
+      "category_id": 6
+    },
+    {
+      "operation_id": 18,
+      "summ": 500,
+      "data": "2026-10-19",
+      "kind": "expense",
+      "comment": "Товары для дома",
+      "category_id": 5
+    },
+    {
+      "operation_id": 9,
+      "summ": 879.5,
+      "data": "2026-10-19",
+      "kind": "expense",
+      "comment": "Такси",
+      "category_id": 3
+    },
+    {
+      "operation_id": 7,
+      "summ": 15000,
+      "data": "2026-10-19",
+      "kind": "expense",
+      "comment": "Аренда квартиры",
+      "category_id": 2
+    },
+    {
+      "operation_id": 14,
+      "summ": 650,
+      "data": "2026-10-18",
+      "kind": "expense",
+      "comment": "Обед",
+      "category_id": 4
+    },
+    {
+      "operation_id": 2,
+      "summ": 3500,
+      "data": "2026-10-18",
+      "kind": "expense",
+      "comment": "Супермаркет",
+      "category_id": 1
+    },
+    {
+      "operation_id": 19,
+      "summ": 700,
+      "data": "2026-10-17",
+      "kind": "expense",
+      "comment": "Покупка одежды",
+      "category_id": 5
+    },
+    {
+      "operation_id": 10,
+      "summ": 1500,
+      "data": "2026-10-17",
+      "kind": "expense",
+      "comment": "Проездной",
+      "category_id": 3
+    },
+    {
+      "operation_id": 15,
+      "summ": 1200,
+      "data": "2026-10-16",
+      "kind": "expense",
+      "comment": "Ужин в ресторане",
+      "category_id": 4
+    },
+    {
+      "operation_id": 3,
+      "summ": 1800,
+      "data": "2026-10-16",
+      "kind": "expense",
+      "comment": "Покупки на рынке",
+      "category_id": 1
+    },
+    {
+      "operation_id": 20,
+      "summ": 800,
+      "data": "2026-10-15",
+      "kind": "expense",
+      "comment": "Канцелярия",
+      "category_id": 5
+    },
+    {
+      "operation_id": 11,
+      "summ": 2000,
+      "data": "2026-10-15",
+      "kind": "expense",
+      "comment": "Поездка на метро",
+      "category_id": 3
+    },
+    {
+      "operation_id": 16,
+      "summ": 1800,
+      "data": "2026-10-14",
+      "kind": "expense",
+      "comment": "Кофейня",
+      "category_id": 4
+    },
+    {
+      "operation_id": 4,
+      "summ": 4200,
+      "data": "2026-10-14",
+      "kind": "expense",
+      "comment": "Продукты на неделю",
+      "category_id": 1
+    },
+    {
+      "operation_id": 21,
+      "summ": 900,
+      "data": "2026-10-13",
+      "kind": "expense",
+      "comment": "Товары для дома",
+      "category_id": 5
+    },
+    {
+      "operation_id": 12,
+      "summ": 1500,
+      "data": "2026-10-13",
+      "kind": "expense",
+      "comment": "Такси",
+      "category_id": 3
+    },
+    {
+      "operation_id": 17,
+      "summ": 1000,
+      "data": "2026-10-12",
+      "kind": "expense",
+      "comment": "Обед",
+      "category_id": 4
+    },
+    {
+      "operation_id": 5,
+      "summ": 2650,
+      "data": "2026-10-12",
+      "kind": "expense",
+      "comment": "Супермаркет",
+      "category_id": 1
+    },
+    {
+      "operation_id": 22,
+      "summ": 1100,
+      "data": "2026-10-11",
+      "kind": "expense",
+      "comment": "Покупка одежды",
+      "category_id": 5
+    },
+    {
+      "operation_id": 6,
+      "summ": 3400,
+      "data": "2026-10-10",
+      "kind": "expense",
+      "comment": "Покупки на рынке",
+      "category_id": 1
+    }
+  ],
+  "limits": [
+    {
+      "limit_id": 1,
+      "category_id": 1,
+      "data": "2026-10-01",
+      "limit_summ": 25000,
+      "spent": 18000,
+      "remaining": 7000
+    },
+    {
+      "limit_id": 2,
+      "category_id": 2,
+      "data": "2026-10-01",
+      "limit_summ": 20000,
+      "spent": 15000,
+      "remaining": 5000
+    },
+    {
+      "limit_id": 3,
+      "category_id": 3,
+      "data": "2026-10-01",
+      "limit_summ": 8000,
+      "spent": 6000,
+      "remaining": 2000
+    },
+    {
+      "limit_id": 4,
+      "category_id": 4,
+      "data": "2026-10-01",
+      "limit_summ": 6000,
+      "spent": 5000,
+      "remaining": 1000
+    },
+    {
+      "limit_id": 5,
+      "category_id": 5,
+      "data": "2026-10-01",
+      "limit_summ": 7000,
+      "spent": 4000,
+      "remaining": 3000
+    }
+  ],
+  "_demo": {
+    "month": "2026-10",
+    "overallMonthlyLimit": 60000,
+    "phone": "+7 900 123-45-67"
+  }
+}
