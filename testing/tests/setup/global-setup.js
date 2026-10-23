@@ -20,6 +20,7 @@ import {
   ROOT,
   TEST_DATABASE_URL,
   TEST_PORT,
+  TEST_RESULTS_DIR,
 } from "./config.js";
 
 let server;
@@ -61,7 +62,7 @@ async function resetDatabase() {
   } catch (error) {
     throw new Error(
       `Нет подключения к тестовой БД ${TEST_DATABASE_URL}.\n` +
-        "Запустите её: npm run test:db:up\n" +
+        "Создайте базу networth_test и проверьте TEST_DATABASE_URL.\n" +
         `Исходная ошибка: ${error.message}`
     );
   }
@@ -99,7 +100,7 @@ function assertPortFree() {
 }
 
 function startServer() {
-  const logDir = path.join(ROOT, "test-results");
+  const logDir = TEST_RESULTS_DIR;
   fs.mkdirSync(logDir, { recursive: true });
   const log = fs.openSync(path.join(logDir, "server.log"), "w");
 
@@ -123,7 +124,7 @@ async function waitForHealth() {
   const deadline = Date.now() + 20000;
   while (Date.now() < deadline) {
     if (server.exitCode !== null) {
-      throw new Error("Сервер завершился при запуске, см. test-results/server.log");
+      throw new Error("Сервер завершился при запуске, см. testing/test-results/server.log");
     }
     try {
       const response = await fetch(`${API_URL}/api/health`);
@@ -133,7 +134,7 @@ async function waitForHealth() {
     }
     await new Promise((resolve) => setTimeout(resolve, 200));
   }
-  throw new Error("Сервер не ответил на /api/health за 20 секунд, см. test-results/server.log");
+  throw new Error("Сервер не ответил на /api/health за 20 секунд, см. testing/test-results/server.log");
 }
 
 async function assertServerUsesTestDatabase() {

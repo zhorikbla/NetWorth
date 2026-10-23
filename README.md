@@ -20,8 +20,9 @@
 ## Структура проекта
 
 ```text
-backend/             Express API, Prisma, миграции, seed и тесты
+backend/             Express API, Prisma, миграции и seed
 frontend/            React-приложение и конфигурация Vite
+testing/             отдельный пакет интеграционных тестов API и БД
 prototype/           первоначальные статические index.html и mock.json
 package.json         общие команды для всего проекта
 ```
@@ -124,7 +125,7 @@ createdb networth_test
 npm test
 ```
 
-Подробности находятся в `backend/tests/README.md`.
+Подробности находятся в `testing/README.md`.
 
 ## Проверки перед отправкой
 

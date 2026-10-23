@@ -11,11 +11,7 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:seed": "prisma db seed",
-    "prisma:validate": "prisma validate",
-    "test": "vitest run",
-    "test:api": "vitest run tests/api",
-    "test:db": "vitest run tests/db",
-    "test:watch": "vitest"
+    "prisma:validate": "prisma validate"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -35,9 +31,5 @@
     "prisma": "^5.22.0",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1"
-  },
-  "devDependencies": {
-    "pg": "^8.23.1",
-    "vitest": "^5.0.5"
   }
 }

@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "setup": "npm ci --prefix backend && npm ci --prefix frontend",
+    "setup": "npm ci --prefix backend && npm ci --prefix frontend && npm ci --prefix testing",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "build": "npm --prefix backend run prisma:generate && npm --prefix frontend run build",
     "start": "npm --prefix backend start",
     "start:prod": "npm --prefix backend run prisma:deploy && npm --prefix backend start",
     "lint": "npm --prefix frontend run lint",
-    "test": "npm --prefix backend test"
+    "test": "npm --prefix testing test",
+    "test:api": "npm --prefix testing run test:api",
+    "test:db": "npm --prefix testing run test:db",
+    "test:watch": "npm --prefix testing run test:watch"
   },
   "engines": {
     "node": ">=20.19.0"

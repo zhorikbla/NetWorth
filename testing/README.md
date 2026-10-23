@@ -1,6 +1,6 @@
 # Автотесты NETWORTH
 
-В наборе 220 проверок API и PostgreSQL. Тесты сами готовят отдельную тестовую БД и запускают отдельный экземпляр backend на порту 3100.
+Папка `testing` — самостоятельный пакет со всеми присланными тестами API и PostgreSQL, собственной конфигурацией Vitest и зависимостями. В наборе 220 проверок. Тесты сами готовят отдельную тестовую БД и запускают backend на порту 3100.
 
 ## Подготовка
 
@@ -24,7 +24,7 @@ createdb networth_test
 npm test
 ```
 
-Из папки `backend`:
+Из папки `testing`:
 
 ```bash
 npm test
@@ -48,7 +48,7 @@ npx vitest run -t "BR-07"
 4. API- и DB-тесты выполняются последовательно.
 5. Тестовый сервер останавливается.
 
-Лог тестового сервера записывается в `backend/test-results/server.log` и не попадает в Git.
+Лог тестового сервера записывается в `testing/test-results/server.log` и не попадает в Git.
 
 ## Как читать результат
 
@@ -90,4 +90,4 @@ tests/
 TEST_DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/networth_test npm test
 ```
 
-Если тесты не стартуют, проверьте наличие базы `networth_test`, доступность PostgreSQL, свободный порт 3100 и `backend/test-results/server.log`.
+Если тесты не стартуют, проверьте наличие базы `networth_test`, доступность PostgreSQL, установленные зависимости backend и testing, свободный порт 3100 и `testing/test-results/server.log`.
