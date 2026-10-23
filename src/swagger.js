@@ -21,12 +21,7 @@ const swaggerSpec = swaggerJsdoc({
             version: "1.0.0",
             description:"REST API приложения для учета личных финансов",
         },
-        servers: [
-            {
-                url: "http://localhost:3000",
-                description:"Локальный сервер",
-            },
-        ],
+        servers: [{ url: "/", description: "Текущий сервер" }],
         components:{
             securitySchemes:{
                 bearerAuth:{

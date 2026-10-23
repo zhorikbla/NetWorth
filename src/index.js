@@ -12,9 +12,13 @@ const limitsRouter = require("./routes/limits");
 const statsRouter = require("./routes/stats");
 const adminRouter = require("./routes/admin");
 
+const cors = require("cors"); //Для render
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+
+app.use(cors({ origin: process.env.FRONTEND_URL })); //Для Render
 
 app.use("/api/categories", categoriesRouter);
 app.use("/api/auth", authRouter);
