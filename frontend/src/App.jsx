@@ -4,12 +4,14 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import AdminRoute from './components/AdminRoute/AdminRoute'
 import AppLayout from './layouts/AppLayout/AppLayout'
 
 const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'))
 const OperationsPage = lazy(() => import('./pages/OperationsPage/OperationsPage'))
 const CategoriesPage = lazy(() => import('./pages/CategoriesPage/CategoriesPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'))
+const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage'))
 function TemporaryPage({title}){
   return(
     <main className="temporary-page">
@@ -33,6 +35,9 @@ function App(){
           <Route path="/categories" element={<CategoriesPage />}/>
           <Route path="/limits" element={<Navigate to="/categories" replace />}/>
           <Route path="/profile" element={<ProfilePage />}/>
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminPage />}/>
+          </Route>
         </Route>
       </Route>
       

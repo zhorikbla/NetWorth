@@ -12,7 +12,22 @@ const NAV_ITEMS = [
   { to: '/profile', label: 'Личный кабинет', icon: 'profile' },
 ]
 
+const ADMIN_NAV_ITEM = {
+  to: '/admin',
+  label: 'Администрирование',
+  icon: 'admin',
+}
+
 function NavigationIcon({ name }) {
+  if (name === 'admin') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3l7 3v5c0 4.7-2.9 8.2-7 10-4.1-1.8-7-5.3-7-10V6z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    )
+  }
+
   if (name === 'categories') {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -59,6 +74,9 @@ function AppLayout() {
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
   const [user, setUser] = useState(getStoredUser)
+  const navigationItems = user?.role === 'admin'
+    ? [...NAV_ITEMS, ADMIN_NAV_ITEM]
+    : NAV_ITEMS
 
   useEffect(() => {
     function handleUserUpdate(event) {
@@ -82,7 +100,7 @@ function AppLayout() {
 
       <aside className="app-sidebar">
         <nav className="app-sidebar-nav" aria-label="Основная навигация">
-          {NAV_ITEMS.map((item) => (
+          {navigationItems.map((item) => (
             <NavLink
               className={({ isActive }) => (
                 `app-sidebar-link${isActive ? ' is-active' : ''}`
