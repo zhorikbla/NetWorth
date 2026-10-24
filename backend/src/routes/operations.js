@@ -14,6 +14,16 @@ function parseDate(value, fieldName, errors) {
     return date;
 }
 
+function parseEndDate(value, fieldName, errors){
+    const date = parseDate(value, fieldName, errors);
+
+    if(!date){
+        return null;
+    }
+    date.setUTCDate(date.getUTCDate()+1);
+    return date;
+}
+
 /**
  * @openapi
  * /api/operations:
@@ -84,8 +94,8 @@ router.get("/", authMiddleware, async (req, res) => {
                 if (from) where.data.gte = from;
             }
             if (date_to !== undefined) {
-                const to = parseDate(date_to, "date_to", errors);
-                if (to) where.data.lte = to;
+                const to = parseEndDate(date_to, "date_to", errors);
+                if (to) where.data.lt = to;
             }
         }
 

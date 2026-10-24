@@ -13,6 +13,15 @@ function parseDate(value, fieldName, errors) {
     return date;
 }
 
+function parseEndDate(value, fieldName, errors){
+    const date = parseDate(value, fieldName, errors);
+    if(!date){
+        return null;
+    }
+    date.setUTCDate(date.getUTCDate()+1);
+    return date;
+}
+
 function buildDateWhere(date_from, date_to, errors) {
     const where = {};
     if (date_from !== undefined) {
@@ -20,8 +29,8 @@ function buildDateWhere(date_from, date_to, errors) {
         if (from) where.gte = from;
     }
     if (date_to !== undefined) {
-        const to = parseDate(date_to, "date_to", errors);
-        if (to) where.lte = to;
+        const to = parseEndDate(date_to, "date_to", errors);
+        if (to) where.lt = to;
     }
     return Object.keys(where).length > 0 ? where : undefined;
 }
@@ -213,14 +222,14 @@ router.get("/timeline", authMiddleware, async (req, res) => {
         const { date_from, date_to } = req.query;
         const errors = [];
         const from = date_from !== undefined ? parseDate(date_from, "date_from", errors) : null;
-        const to = date_to !== undefined ? parseDate(date_to, "date_to", errors) : null;
+        const to = date_to !== undefined ? parseEndDate(date_to, "date_to", errors) : null;
         if (errors.length > 0) {
             return res.status(400).json({ error: errors.join("; ") });
         }
 
         const conditions = [Prisma.sql`user_id = ${req.user.user_id}`];
         if (from) conditions.push(Prisma.sql`data >= ${from}`);
-        if (to) conditions.push(Prisma.sql`data <= ${to}`);
+        if (to) conditions.push(Prisma.sql`data < ${to}`);
         const whereClause = Prisma.join(conditions, " AND ");
 
         const rows = await prisma.$queryRaw`

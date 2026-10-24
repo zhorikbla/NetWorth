@@ -1,8 +1,11 @@
 require("dotenv").config();
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger")
 const prisma = require("./db");
+const cors = require("cors");
 
 const categoriesRouter = require("./routes/categories");
 const authRouter = require("./routes/auth");
@@ -12,13 +15,26 @@ const limitsRouter = require("./routes/limits");
 const statsRouter = require("./routes/stats");
 const adminRouter = require("./routes/admin");
 
-const cors = require("cors"); //Для render
+const requiredEnvironmentVariables = ["DATABASE_URL", "JWT_SECRET"];
+const missingEnvironmentVariables = requiredEnvironmentVariables.filter(
+  (variableName) => !process.env[variableName]
+);
+
+if (missingEnvironmentVariables.length > 0) {
+  throw new Error(
+    `Не заданы переменные окружения: ${missingEnvironmentVariables.join(", ")}`
+  );
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
-app.use(cors({ origin: process.env.FRONTEND_URL })); //Для Render
+// При раздельном деплое разрешаем запросы только с явно указанного frontend.
+// Для единого Render-сервиса CORS не нужен, потому что frontend и API имеют один origin.
+if (process.env.FRONTEND_URL) {
+  app.use(cors({ origin: process.env.FRONTEND_URL }));
+}
 
 app.use("/api/categories", categoriesRouter);
 app.use("/api/auth", authRouter);
@@ -84,6 +100,26 @@ app.get("/api/db-check", async (req, res) => {
   } 
 });
 
+// После `npm run build` Vite кладёт готовый frontend в frontend/dist.
+// Express раздаёт эти файлы в production, а неизвестные frontend-маршруты
+// возвращает в index.html, чтобы React Router обработал URL самостоятельно.
+const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+
+  app.use((req, res, next) => {
+    const isFrontendRoute = req.method === "GET"
+      && req.accepts("html")
+      && !req.path.startsWith("/api");
+
+    if (isFrontendRoute) {
+      return res.sendFile(path.join(frontendDistPath, "index.html"));
+    }
+
+    next();
+  });
+}
+
 app.use((req, res)=>{
   res.status(404).json({
     error:"Маршрут не найден",
@@ -94,6 +130,3 @@ app.listen(PORT, () => {
   console.log(`NETWORTH API: http://localhost:${PORT}`);
   console.log(`SWAGGER UI: http://localhost:${PORT}/api-docs`);  
 });
-
-
-

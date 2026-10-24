@@ -3,6 +3,15 @@ const prisma = require("../db");
 const authMiddleware = require("../middleware/auth");
 const router = express.Router();
 
+function parseMonthStart(value){
+    const date = new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+        return null;
+    }
+    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
+}
+
 /**
  * @openapi
  * /api/limits:
@@ -151,8 +160,8 @@ router.post("/", authMiddleware, async (req, res) => {
             errors.push("limit_summ должен быть положительным числом");
         }
 
-        const limitDate = new Date(data);
-        if (Number.isNaN(limitDate.getTime())) {
+        const limitDate = parseMonthStart(data);
+        if (!limitDate) {
             errors.push("Некорректная дата в поле data");
         }
 
@@ -263,8 +272,8 @@ router.patch("/:id", authMiddleware, async (req, res) => {
         const updateData = {};
 
         if (data !== undefined) {
-            const limitDate = new Date(data);
-            if (Number.isNaN(limitDate.getTime())) {
+            const limitDate = parseMonthStart(data);
+            if (!limitDate) {
                 errors.push("Некорректная дата в поле data");
             } else {
                 updateData.data = limitDate;

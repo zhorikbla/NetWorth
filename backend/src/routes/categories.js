@@ -24,6 +24,9 @@ const router = express.Router();
 router.get("/", authMiddleware, async (req,res)=>{
     try{
         const categories = await prisma.category.findMany({
+            where:{
+                user_id:req.user.user_id,
+            },
             select:{
                 category_id: true,
                 name: true,
